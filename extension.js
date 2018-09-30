@@ -13,14 +13,26 @@ function activate(context) {
     // The command has been defined in the package.json file
     // Now provide the implementation of the command with  registerCommand
     // The commandId parameter must match the command field in package.json
-    let disposable = vscode.commands.registerCommand('extension.sayHello', function () {
+    let disposableInit = vscode.commands.registerCommand('extension.inlineInit', function () {
         // The code you place here will be executed every time your command is executed
 
         // Display a message box to the user
-        vscode.window.showInformationMessage('Hello World!');
-    });
+        vscode.window.showInformationMessage('Inline executed');        
 
-    context.subscriptions.push(disposable);
+    });
+    let disposableTrigger = vscode.commands.registerCommand('extension.triggerInlineComment', function() {
+        // This will be called once the cursor is on a line asking for a flexbox
+        console.log("Key registered");
+        if(vscode.window.activeTextEditor === undefined || 
+            vscode.window.activeTextEditor.document === undefined){
+            return;
+        }
+        else{
+            vscode.window.showInformationMessage("Triggered!");
+        }
+
+    })
+    context.subscriptions.push(disposableInit,disposableTrigger);
 }
 exports.activate = activate;
 
