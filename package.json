@@ -18,7 +18,7 @@
         "commands": [
             {
                 "command": "extension.triggerInlineComment",
-                "title": "Inline Execution"
+                "title":"Inliner Executer"
 
             },
             {
@@ -26,7 +26,12 @@
                 "title": "Inliner Announcer"
             }
 
-        ]
+        ],
+        "keybindings": [{
+            "command": "extension.triggerInlineComment",
+            "key": "ctrl+shift+j",
+            "mac": "cmd+shift+j"
+        }]
     },
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",

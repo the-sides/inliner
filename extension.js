@@ -2,6 +2,20 @@
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
 
+function scanContextLines(editor, depth, lineNumber) {
+    var line = editor.document.lineAt(lineNumber);
+    var totalLines = editor.document.lineCount;
+    if(depth > totalLines - lineNumber) depth = totalLines - lineNumber;
+    var maxCol = line.range[1].character;
+    while(depth > 0){
+        line = editor.document.lineAt(lineNumber + depth);
+        if(line.range[1].character > maxCol) maxCol = line.range[1].character;
+        depth -= 1;
+    }
+    return maxCol;
+
+}
+
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 function activate(context) {
@@ -22,13 +36,31 @@ function activate(context) {
     });
     let disposableTrigger = vscode.commands.registerCommand('extension.triggerInlineComment', function() {
         // This will be called once the cursor is on a line asking for a flexbox
-        console.log("Key registered");
+        // console.log("Key registered");
         if(vscode.window.activeTextEditor === undefined || 
             vscode.window.activeTextEditor.document === undefined){
             return;
         }
-        else{
-            vscode.window.showInformationMessage("Triggered!");
+        // vscode.window.showInformationMessage("Triggered!");
+        // Not a cursor position method, BUT 
+        var editor = vscode.window.activeTextEditor
+
+        // If nothing is selected, selection will work as a position for cursor.
+        if(editor.selection.isEmpty){
+            var position = editor.selection.active;
+            var lineNumber = position.line
+            var depth = 5;
+            var line = editor.document.lineAt(lineNumber);
+            var totalLines = editor.document.lineCount;
+            if(depth > totalLines - lineNumber) depth = totalLines - lineNumber;
+            var maxCol = line.range[1].character;
+            while(depth > 0){
+                line = editor.document.lineAt(lineNumber + depth);
+                if(line.range[1].character > maxCol) maxCol = line.range[1].character;
+                depth -= 1;
+            }
+            console.log(scanContextLines(editor, 5, lineNumber));
+
         }
 
     })
