@@ -29,8 +29,8 @@
         ],
         "keybindings": [{
             "command": "extension.triggerInlineComment",
-            "key": "ctrl+shift+j",
-            "mac": "cmd+shift+j"
+            "key": "ctrl+shift+i",
+            "mac": "cmd+shift+i"
         }]
     },
     "scripts": {
