@@ -22,6 +22,11 @@
 
             },
             {
+                "command":"extension.formatInlineComment",
+                "title":"Inliner Formatter"
+
+            },
+            {
                 "command":"extension.inlineInit",
                 "title": "Inliner Announcer"
             }
@@ -31,7 +36,13 @@
             "command": "extension.triggerInlineComment",
             "key": "ctrl+shift+i",
             "mac": "cmd+shift+i"
-        }]
+        },
+        {
+            "command":"extension.formatInlineComment",
+            "key":"ctrl+shift+j",
+            "mac":"cmd+shift+j"
+        }
+        ]
     },
     "scripts": {
         "postinstall": "node ./node_modules/vscode/bin/install",

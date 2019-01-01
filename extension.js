@@ -121,13 +121,38 @@ function activate(context) {
         }
 
     })
-    context.subscriptions.push(disposableInit,disposableTrigger);
+    let disposableFormatter = vscode.commands.registerCommand('extension.formatInlineComment', function(){
+        // If the cursor is already within a comment
+        var editor = vscode.window.activeTextEditor
+        if(editor.selection.isEmpty){
+            var position = editor.selection.active;
+            var lineNumber = position.line
+            var line = editor.document.lineAt(lineNumber);
+            var commentPosition = line.text.indexOf(commentType)
+
+            if(commentPosition == -1){
+                console.log("No comment block on this line")
+                return null;
+            } 
+            if(commentPosition < position.character){
+                console.log("User within comment blocK")
+                let nextLine = editor.document.lineAt(lineNumber+1)
+                if(nextLine.text.length < commentPosition)
+                nextLine.text
+            } 
+        }
+    })
+    context.subscriptions.push(disposableInit,disposableTrigger, disposableFormatter);
 }
 exports.activate = activate;
+
+// Enter Action Event Handler
+// vscode.Enter      Using formatInlineComment for the time being
+
 
 // this method is called when your extension is deactivated
 function deactivate() {
     // No code necessary
-    // The keybind should be disconnected once the extension isn't running
+    // The keybind should be disconnected once the extensionisn't running
 }
 exports.deactivate = deactivate;
